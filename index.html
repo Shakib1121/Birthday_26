@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+    <meta name="theme-color" content="#14000c" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <title>Happy Birthday! 💖</title>
+
+    <!-- Social Media Link Preview (Prevents Text Spoilers on Instagram, WhatsApp, etc.) -->
+    <meta name="description" content="For Oishee" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Something Special 💖" />
+    <meta property="og:description" content="For Oishee" />
+    <meta property="og:image" content="images/photo.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Something Special 💖" />
+    <meta name="twitter:description" content="For Oishee" />
+    <meta name="twitter:image" content="images/photo.jpg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Magical Background Elements -->
+    <div id="fairy-dust"></div>
+    <div id="rose-petals"></div>
+    <div id="floating-hearts"></div>
+
+    <!-- Audio Autoplay Workaround -->
+    <div id="start-screen">
+      <div class="start-card">
+        <h1>Ready?</h1>
+        <button id="start-btn">Enter 🤍</button>
+      </div>
+    </div>
+
+    <!-- Heart Trail Container -->
+    <div id="hearts-container"></div>
+
+    <div id="main-content" class="hidden">
+      <!-- Photo Reveal Section -->
+      <section class="photo-section">
+        <div class="photo-frame">
+          <!-- Place your photo in the "images" folder and update the name here -->
+          <img id="reveal-photo" src="images/photo.jpg" alt="Special Photo" />
+        </div>
+        <p id="photo-hint">Becoming clearer every day...</p>
+      </section>
+
+      <!-- Countdown Section -->
+      <section id="countdown-section">
+        <h2 class="countdown-title">Countdown to a special day</h2>
+        <div id="countdown">
+          <div class="time-box">
+            <span id="days">00</span>
+            <small>Days</small>
+          </div>
+          <div class="time-box">
+            <span id="hours">00</span>
+            <small>Hours</small>
+          </div>
+          <div class="time-box">
+            <span id="minutes">00</span>
+            <small>Minutes</small>
+          </div>
+          <div class="time-box">
+            <span id="seconds">00</span>
+            <small>Seconds</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Midnight Reveal: Typewriter -->
+      <section id="reveal-section" class="hidden">
+        <h1 class="happy-birthday-title">
+          Happy Birthday The Brown Eyed Angel! 💝
+        </h1>
+        <p id="typewriter"></p>
+      </section>
+
+      <!-- The Envelope to the Next Page -->
+      <section id="envelope-section" class="hidden">
+        <div class="envelope" id="envelope-btn">
+          <div class="flap"></div>
+          <div class="pocket"></div>
+          <div class="seal">💌</div>
+          <p class="hint">Tap to open your gift!</p>
+        </div>
+      </section>
+
+      <!-- Music Control -->
+      <div id="music-widget" class="hidden">
+        <button id="music-btn" class="music-btn">
+          <span id="music-icon">🎵</span>
+          <span id="music-text">Play Music</span>
+        </button>
+      </div>
+
+      <!-- Hidden Audio Element -->
+      <audio id="birthday-song" loop>
+        <!-- Place your uploaded track in the "music" folder and update the name here -->
+        <source src="music/track.mp3" type="audio/mpeg" />
+      </audio>
+    </div>
+
+    <footer>
+      <p>Created with 🖤 by Dark</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

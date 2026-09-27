@@ -1,0 +1,429 @@
+/* =========================================================================
+   EDITABLE VARIABLES
+   ========================================================================= */
+:root {
+  --primary-bg: #14000c;
+  --secondary-bg: #470122;
+  --tertiary-bg: #8c0032;
+
+  --text-main: #f8f9fa;
+  --text-accent: #ffb7d5;
+
+  --font-main: "Outfit", sans-serif;
+  --font-cursive: "Great Vibes", cursive;
+
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(255, 183, 213, 0.5);
+
+  --scratch-bg: #ffffff;
+  --scratch-text: #d63384;
+}
+
+/* =========================================================================
+   RESET & BASE STYLES
+   ========================================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-main);
+  background: linear-gradient(
+    135deg,
+    var(--primary-bg),
+    var(--secondary-bg),
+    var(--tertiary-bg)
+  );
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================================================================
+   MAGICAL BACKGROUND
+   ========================================================================= */
+#fairy-dust {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.firefly {
+  position: absolute;
+  background: #ffebb3;
+  border-radius: 50%;
+  filter: blur(2px);
+  animation: drift 10s infinite ease-in-out alternate;
+  will-change: transform, opacity;
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.8);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate3d(20px, -20px, 0) scale(1.2);
+    opacity: 0.8;
+    box-shadow: 0 0 15px 5px #ffebb3;
+  }
+  100% {
+    transform: translate3d(-20px, 20px, 0) scale(0.8);
+    opacity: 0.2;
+  }
+}
+
+#rose-petals {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.rose-petal {
+  position: absolute;
+  font-size: 20px;
+  animation:
+    fall 15s linear forwards,
+    sway 3s ease-in-out infinite alternate;
+  opacity: 0;
+  top: -50px;
+  will-change: transform, opacity;
+}
+
+@keyframes fall {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 110vh, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes sway {
+  0% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  100% {
+    translate: 50px 0;
+    rotate: 45deg;
+  }
+}
+
+#floating-hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-heart {
+  position: absolute;
+  bottom: -50px;
+  animation: floatHeart linear forwards;
+  opacity: 0;
+  filter: drop-shadow(0 0 10px rgba(255, 117, 140, 0.6));
+  will-change: transform, opacity;
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate3d(0, -120vh, 0) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* =========================================================================
+   PASSWORD SCREEN
+   ========================================================================= */
+#password-screen {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 11, 46, 0.95);
+  backdrop-filter: blur(15px);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease;
+}
+
+.password-card {
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  max-width: 90%;
+  width: 400px;
+  animation: slideUp 0.6s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.password-card.shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-10px);
+  }
+  40%,
+  80% {
+    transform: translateX(10px);
+  }
+}
+
+.password-card h1 {
+  font-family: var(--font-cursive);
+  font-size: 3.5rem;
+  color: var(--text-accent);
+  margin-bottom: 10px;
+}
+
+.password-card p {
+  margin-bottom: 25px;
+  opacity: 0.9;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#password-input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 1.1rem;
+  font-family: var(--font-main);
+  background: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+#unlock-btn {
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(45deg, #d63384, #ff7eb3);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(214, 51, 132, 0.4);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+#unlock-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(214, 51, 132, 0.6);
+}
+
+#error-msg {
+  color: #ff8a8a;
+  margin-top: 15px;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+/* =========================================================================
+   GIFT CONTENT
+   ========================================================================= */
+#gift-content {
+  width: 100%;
+  max-width: 900px;
+  padding: 40px 20px;
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.gift-title {
+  font-family: var(--font-cursive);
+  font-size: 4rem;
+  color: var(--text-accent);
+  text-shadow: 0 0 15px var(--border-glow);
+}
+
+.gift-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+
+/* =========================================================================
+   SCRATCH CARDS
+   ========================================================================= */
+#scratch-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.scratch-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.card-label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-accent);
+  text-align: center;
+  background: var(--card-bg);
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.scratch-card {
+  position: relative;
+  width: 250px;
+  height: 150px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  background: var(--scratch-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid rgba(255, 183, 213, 0.5);
+}
+
+/* The revealed text behind the canvas */
+.scratch-content {
+  font-family: var(--font-cursive);
+  font-size: 3rem;
+  color: var(--scratch-text);
+  font-weight: bold;
+  user-select: none;
+}
+
+/* The canvas acting as the scratchable layer */
+.scratch-card canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  z-index: 2;
+}
+
+.scratch-card canvas:active {
+  cursor: grabbing;
+}
+
+
+/* =========================================================================
+   FOOTER
+   ========================================================================= */
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+  opacity: 0.6;
+  font-size: 0.9rem;
+  font-family: var(--font-main);
+  z-index: 10;
+  color: var(--text-main);
+}
+
+/* =========================================================================
+   RESPONSIVE
+   ========================================================================= */
+@media (max-width: 600px) {
+  .gift-title {
+    font-size: 3rem;
+  }
+  .scratch-card {
+    width: 220px;
+    height: 130px;
+  }
+  .scratch-content {
+    font-size: 2.5rem;
+  }
+}

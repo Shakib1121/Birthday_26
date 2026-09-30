@@ -397,8 +397,9 @@ body {
 }
 
 #typewriter {
-  font-size: 1.2rem;
-  line-height: 1.8;
+  font-family: "Caveat", cursive;
+  font-size: 2rem;
+  line-height: 1.5;
   min-height: 150px;
   white-space: pre-line;
   padding: 20px;

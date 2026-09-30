@@ -348,14 +348,11 @@ header {
 }
 
 .card-label {
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   font-weight: 600;
   color: var(--text-accent);
   text-align: center;
-  background: var(--card-bg);
-  padding: 8px 20px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
 }
 
 .scratch-card {
@@ -379,6 +376,8 @@ header {
   color: var(--scratch-text);
   font-weight: bold;
   user-select: none;
+  text-align: center;
+  padding: 0 10px;
 }
 
 /* The canvas acting as the scratchable layer */

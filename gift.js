@@ -10,18 +10,20 @@ const CONFIG = {
     { label: "❤️", hidden: "You" },
     { label: "💙", hidden: "Are" },
     { label: "💜", hidden: "The" },
-    { label: "🖤", hidden: "Cutest" },
+    { label: "🖤", hidden: "Best" },
+    { label: "💗", hidden: "Cutest" },
     { label: "💝", hidden: "Sweetest" },
-    { label: "🧡", hidden: "Smartest" },
-    { label: "💛", hidden: "Prettiest" },
-    { label: "💚", hidden: "Most Caring" },
-    { label: "🤎", hidden: "Most Lovable" },
-    { label: "🤍", hidden: "Most Adorable" },
-    { label: "🩷", hidden: "Most Beautiful" },
-    { label: "🩵", hidden: "Most Talented" },
-    { label: "💞", hidden: "Most Charming" },
-    { label: "💓", hidden: "Most Attractive" },
-    { label: "🖤", hidden: "I Love You Pakhi 🖤" },
+    { label: "💛", hidden: "Amr jaan" },
+    { label: "🩵", hidden: "Amr pookie" },
+    { label: "🧡", hidden: "Amr pakhi" },
+    { label: "🤎", hidden: "Amr bou" },
+    { label: "💚", hidden: "Amr valobasha" },
+    { label: "🤍", hidden: "Amr boujaan" },
+    { label: "🩷", hidden: "I Love You Jaan" },
+    { label: "💞", hidden: "I Love You Bou" },
+    { label: "💓", hidden: "I Love You Pookie" },
+    { label: "🖤", hidden: "I Love You Pakhi" },
+    { label: "🖤", hidden: "I Love You Boujaan" },
   ],
 
   // Scratch brush size
@@ -40,6 +42,14 @@ const errorMsg = document.getElementById("error-msg");
 const giftContent = document.getElementById("gift-content");
 const scratchContainer = document.getElementById("scratch-container");
 
+const bgMusic = document.getElementById("birthday-song");
+const musicBtn = document.getElementById("music-btn");
+const musicIcon = document.getElementById("music-icon");
+const musicText = document.getElementById("music-text");
+const musicWidget = document.getElementById("music-widget");
+
+let isMusicPlaying = false;
+
 /* =========================================================================
    MAGICAL BACKGROUND LOGIC
    ========================================================================= */
@@ -52,7 +62,7 @@ function initBackground() {
 function createFireflies() {
   const container = document.getElementById("fairy-dust");
   if (!container) return;
-  const count = window.innerWidth < 600 ? 50 : 90;
+  const count = window.innerWidth < 600 ? 40 : 150;
   for (let i = 0; i < count; i++) {
     const firefly = document.createElement("div");
     firefly.className = "firefly";
@@ -107,6 +117,39 @@ function createFloatingHeart() {
 initBackground();
 
 /* =========================================================================
+   MUSIC CONTROL
+   ========================================================================= */
+function toggleMusic() {
+  if (isMusicPlaying) {
+    bgMusic.pause();
+    isMusicPlaying = false;
+    musicIcon.innerText = "🎵";
+    musicText.innerText = "Play Music";
+    musicBtn.classList.remove("playing");
+    sessionStorage.setItem("musicPlaying", "false");
+  } else {
+    bgMusic.volume = 0.5;
+    bgMusic.play().then(() => {
+      isMusicPlaying = true;
+      musicIcon.innerText = "⏸️";
+      musicText.innerText = "Pause Music";
+      musicBtn.classList.add("playing");
+      sessionStorage.setItem("musicPlaying", "true");
+    }).catch(e => console.log("Audio play blocked", e));
+  }
+}
+
+if (musicBtn) {
+  musicBtn.addEventListener("click", toggleMusic);
+}
+
+setInterval(() => {
+  if (isMusicPlaying) {
+    sessionStorage.setItem("musicTime", bgMusic.currentTime);
+  }
+}, 1000);
+
+/* =========================================================================
    PASSWORD LOGIC
    ========================================================================= */
 unlockBtn.addEventListener("click", checkPassword);
@@ -123,6 +166,21 @@ function checkPassword() {
     setTimeout(() => {
       passwordScreen.classList.add("hidden");
       giftContent.classList.remove("hidden");
+      
+      musicWidget.classList.remove("hidden");
+
+      // Attempt to resume music
+      if (sessionStorage.getItem("musicPlaying") === "true") {
+        bgMusic.currentTime = parseFloat(sessionStorage.getItem("musicTime") || "0");
+        bgMusic.volume = 0.5;
+        bgMusic.play().then(() => {
+          isMusicPlaying = true;
+          musicIcon.innerText = "⏸️";
+          musicText.innerText = "Pause Music";
+          musicBtn.classList.add("playing");
+        }).catch((e) => console.log("Audio play blocked", e));
+      }
+
       initScratchCards();
     }, 500);
   } else {

@@ -89,7 +89,7 @@ function initBackground() {
 function createFireflies() {
   const container = document.getElementById("fairy-dust");
   if (!container) return;
-  const count = window.innerWidth < 600 ? 50 : 90;
+  const count = window.innerWidth < 600 ? 40 : 150;
   for (let i = 0; i < count; i++) {
     const firefly = document.createElement("div");
     firefly.className = "firefly";
@@ -129,7 +129,7 @@ function createFloatingHeart() {
   const heart = document.createElement("div");
   heart.className = "bg-heart";
 
-  const icons = ["💖", "💕", "🤍", "✨", "💓", "💗"];
+  const icons = ["💖", "💕", "🤍", "💙", "💓", "💗", "💜"];
   heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
 
   heart.style.left = Math.random() * 100 + "vw";
@@ -229,7 +229,8 @@ function triggerMidnightReveal() {
   }
 
   // Confetti
-  launchConfetti();
+  const duration = CONFIG.TYPEWRITER_MESSAGE.length * CONFIG.TYPEWRITER_SPEED;
+  launchConfetti(duration);
 
   // Typewriter
   startTypewriter(CONFIG.TYPEWRITER_MESSAGE, 0, () => {
@@ -240,28 +241,43 @@ function triggerMidnightReveal() {
   });
 }
 
-function launchConfetti() {
+function launchConfetti(duration) {
   if (typeof confetti === "function") {
-    const duration = 5 * 1000;
     const end = Date.now() + duration;
+    const isMobile = window.innerWidth < 600;
+    const baseParticleCount = isMobile ? 3 : 8;
+
+    // Define custom emoji shapes
+    const emojis = ["❤️", "💙", "💜", "💛", "💚", "💖", "🤍", "🩷", "🩵", "🤎"];
+    const customShapes = emojis.map((e) =>
+      confetti.shapeFromText({ text: e })
+    );
 
     (function frame() {
-      confetti({
-        particleCount: 5,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 },
-        colors: ["#ff7eb3", "#ff758c", "#ffffff"],
-      });
-      confetti({
-        particleCount: 5,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 },
-        colors: ["#ff7eb3", "#ff758c", "#ffffff"],
-      });
+      const timeLeft = end - Date.now();
+      const progress = Math.max(0, timeLeft / duration); // 1.0 down to 0.0
 
-      if (Date.now() < end) {
+      // Gradually reduce frequency as time runs out
+      if (Math.random() < progress) {
+        confetti({
+          particleCount: baseParticleCount,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          shapes: customShapes,
+          scalar: 1.5,
+        });
+        confetti({
+          particleCount: baseParticleCount,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          shapes: customShapes,
+          scalar: 1.5,
+        });
+      }
+
+      if (timeLeft > 0) {
         requestAnimationFrame(frame);
       }
     })();
@@ -333,7 +349,7 @@ function toggleMusic() {
     bgMusic.pause();
     isMusicPlaying = false;
     musicIcon.innerText = "🎵";
-    musicText.innerText = "Play Music";
+    musicText.innerText = "Music";
     musicBtn.classList.remove("playing");
   } else {
     bgMusic.volume = 0.5;
@@ -342,7 +358,7 @@ function toggleMusic() {
       .then(() => {
         isMusicPlaying = true;
         musicIcon.innerText = "⏸️";
-        musicText.innerText = "Pause Music";
+        musicText.innerText = "Music";
         musicBtn.classList.add("playing");
       })
       .catch((e) => console.log("Audio play blocked", e));
@@ -353,10 +369,23 @@ if (musicBtn) {
   musicBtn.addEventListener("click", toggleMusic);
 }
 
+setInterval(() => {
+  if (isMusicPlaying) {
+    sessionStorage.setItem("musicTime", bgMusic.currentTime);
+  }
+}, 1000);
+
 /* =========================================================================
    ENVELOPE ROUTING
    ========================================================================= */
 envelopeBtn.addEventListener("click", () => {
+  if (isMusicPlaying) {
+    sessionStorage.setItem("musicPlaying", "true");
+    sessionStorage.setItem("musicTime", bgMusic.currentTime);
+  } else {
+    sessionStorage.setItem("musicPlaying", "false");
+  }
+
   // Add a tiny delay to allow animation
   setTimeout(() => {
     window.location.href = "gift.html";
